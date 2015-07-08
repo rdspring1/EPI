@@ -1,18 +1,42 @@
 #include "linkedlist.h"
 
+#include <list>
 #include <iostream>
 #include <stdlib.h>
 #include <utility>
+#include <assert.h>
 
 bool compare(LN<int>* first, LN<int>* second)
 {
-	// TODO
-	return false;
+	while((first != nullptr) && (second != nullptr))
+	{
+		if(*first != *second)
+		{
+			return false;
+		}
+		advance(first);
+		advance(second);
+	}
+	return true;
 }
 
 bool compare(PLN<int>* first, PLN<int>* second)
 {
-	// TODO
+	bool check = compare((LN<int>*) first, (LN<int>*) second);
+	if(!check)
+	{
+		return false;
+	}
+
+	while((first != nullptr) && (second != nullptr))
+	{
+		if(*first != *second)
+		{
+			return false;
+		}
+		jump(first);
+		jump(second);
+	}
 	return false;
 }
 
@@ -24,21 +48,74 @@ std::pair<LN<int>*, LN<int>*> generate_list()
 	for(int i = 0; i < size; ++i)
 	{
 		curr->next = new LN<int>(i+1);
-		curr = curr->next;
+		advance(curr);
 	}
 	return std::make_pair(head, curr);
 }
 
 std::vector<LN<int>*> generate_merge()
 {
-	// TODO
-	return std::vector<LN<int>*>();
+	std::vector<LN<int>*> test;
+	test.push_back(new LN<int>(0));
+	test.push_back(new LN<int>(0));
+	test.push_back(new LN<int>(1));
+
+	LN<int>* result = test[0];
+	result->next = new LN<int>(1);
+	advance(result);
+
+	LN<int>* lhs = test[1];
+	LN<int>* rhs = test[2];
+
+	const int size = rand() % SIZE;
+	for(int i = 0; i < size; ++i)
+	{
+		const int offset = rand() % SIZE;
+		result->next = new LN<int>(result->value + offset);
+		advance(result);
+
+		const int side = (rand() % SIZE) % 2;
+		if(side)
+		{
+			lhs->next = new LN<int>(result->value + offset);
+			advance(lhs);
+		}
+		else
+		{
+			rhs->next = new LN<int>(result->value + offset);
+			advance(rhs);
+		}
+	}
+	return test;
 }
 
 std::pair<LN<int>*, LN<int>*> generate_reverse()
 {
-	// TODO
-	return std::make_pair(nullptr, nullptr);
+	std::list<int> rand_list;
+	const int size = rand() % SIZE + 1;
+	for(int i = 0; i < size; ++i)
+	{
+		rand_list.push_back(rand() % SIZE);
+	}
+
+	LN<int>* forward = new LN<int>(0);
+	LN<int>* fcurr = forward;
+	for(auto& v : rand_list)
+	{
+		fcurr->value = v;
+		fcurr->next = new LN<int>(0);
+		advance(fcurr);
+	}
+
+	LN<int>* backward = new LN<int>(0);
+	LN<int>* bcurr = backward;
+	for(auto iter = rand_list.rbegin(); iter != rand_list.rend(); ++iter)
+	{
+		bcurr->value = *iter;
+		bcurr->next = new LN<int>(0);
+		advance(bcurr);
+	}
+	return std::make_pair(forward, backward);
 }
 
 std::pair<LN<int>*, int> generate_cycle()
@@ -64,20 +141,70 @@ std::pair<LN<int>*, int> generate_cycle()
 
 PLN<int>* generate_posting_list()
 {
-	// TODO
-	return nullptr;
+	PLN<int>* head = new PLN<int>(0);
+	PLN<int>* curr = head;
+
+	std::vector<PLN<int>*> jump_set;
+	jump_set.push_back(head);
+
+	const int size = rand() % SIZE;
+	for(int i = 0; i < size; ++i)
+	{
+		curr->next = new PLN<int>(i+1);
+		advance(curr);
+		jump_set.push_back(curr);
+	}
+
+	for(int i = 0; i < SIZE; ++i)
+	{
+		const int lhs = rand() % size;
+		const int rhs = rand() % size;
+		std::swap(jump_set[lhs], jump_set[rhs]);
+	}
+
+	int pos = 0;
+	curr = head;
+	for(auto& v : jump_set)
+	{
+		if(v->value > pos)
+		{
+			curr->jump = v;
+			advance(curr);
+		}
+	}
+	return head;
 }
 
-void print(LN<int>* list)
+template<typename T>
+void print(T* list)
 {
-	int visit = 0;
+	while(list != NULL)
+	{
+		std::cout << list->value << " ";
+		advance(list);
+	}
+	std::cout << "NULL" << std::endl;
+}
+
+void print_jump(PLN<int>* list)
+{
+	while(list != NULL)
+	{
+		std::cout << list->value << " ";
+		jump(list);
+	}
+	std::cout << "NULL" << std::endl;
+}
+
+void print_cycle(LN<int>* list)
+{
 	LN<int>* prev = list;
-	list = advance(list);
+	advance(list);
 	while((list != NULL) && (prev->value < list->value))
 	{
 		std::cout << prev->value << " ";	
-		prev = prev->next;
-		list = list->next;
+		advance(prev);
+		advance(list);
 	}
 	if(list != NULL)
 	{
@@ -89,12 +216,26 @@ void print(LN<int>* list)
 	}
 }
 
-LN<int>* advance(LN<int>* node)
+void advance(LN<int>*& node)
 {
-	if(!node)
+	if(node != nullptr)
 	{
-		return nullptr;
+		node = node->next;
 	}
-	return node->next;
 }
 
+void advance(PLN<int>*& node)
+{
+	if(node != nullptr)
+	{
+		node = node->next;
+	}
+}
+
+void jump(PLN<int>*& node)
+{
+	if(node != nullptr)
+	{
+		node = node->jump;
+	}
+}

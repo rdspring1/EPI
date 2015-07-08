@@ -19,9 +19,9 @@ LN<int>* cyclicity(LN<int>* head)
 	LN<int>* fast = head;
 	do
 	{
-		slow = advance(slow);
-		fast = advance(fast);
-		fast = advance(fast);
+		advance(slow);
+		advance(fast);
+		advance(fast);
 	}
 	while(slow != fast);
 
@@ -32,11 +32,11 @@ LN<int>* cyclicity(LN<int>* head)
 
 	// Cycle Length
 	int length = 1;
-	fast = advance(fast);
+	advance(fast);
 	while(slow != fast)
 	{
 		++length;
-		fast = advance(fast);
+		advance(fast);
 	}
 
 	// Determine Start Node of Cycle
@@ -44,13 +44,13 @@ LN<int>* cyclicity(LN<int>* head)
 	fast = head;
 	for(int i = 0; i < length; ++i)
 	{
-		fast = advance(fast);
+		advance(fast);
 	}
 
 	while(slow != fast)
 	{
-		slow = advance(slow);
-		fast = advance(fast);
+		advance(slow);
+		advance(fast);
 	}
 	return slow;
 }

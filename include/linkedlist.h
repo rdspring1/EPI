@@ -15,28 +15,54 @@ class LN
 		LN<T>* next;
 
 	public:
-		LN(T v)
+		LN(const T& v)
 		{
 			this->value = v;
 			this->next = NULL;
 		}
+
+	bool operator==(const LN& other) const
+	{
+		return this->value == other.value;
+	}
+
+	bool operator!=(const LN& other) const
+	{
+		return !(*this == other);
+	}
 };
 
 template<typename T>
-class PLN : public LN<T>
+class PLN
 {
 	public:
-		LN<T>* jump;
+		T value;
+		PLN<T>* next;
+		PLN<T>* jump;
 
 	public:
-		PLN(T v) : LN<T>(v)
+		PLN(const T& v)
 	{
+		this->value = v;
+		this->next = NULL;
 		this->jump = NULL;
+	}
+
+	bool operator==(const PLN& other) const
+	{
+		return this->value == other.value;
+	}
+
+	bool operator!=(const PLN& other) const
+	{
+		return !(*this == other);
 	}
 };
 
 // Iterator Functions
-LN<int>* advance(LN<int>* node);
+void advance(LN<int>*& node);
+void advance(PLN<int>*& node);
+void jump(PLN<int>*& node);
 
 // Unit Test Functions
 bool compare(LN<int>* first, LN<int>* second);
@@ -50,7 +76,10 @@ std::pair<LN<int>*, int> generate_cycle();
 PLN<int>* generate_posting_list();
 
 // Debug Functions
-void print(LN<int>* list);
+template<typename T>
+void print(T* list);
+void print_jump(PLN<int>* list);
+void print_cycle(LN<int>* list);
 
 // Problem Functions
 LN<int>* merge(LN<int>* first, LN<int>* second);

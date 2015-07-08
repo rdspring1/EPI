@@ -11,10 +11,11 @@ static const int RUNS = 1000;
 
 TEST(EPI8_LinkedList, Merge)
 {
+	static const unsigned ELMS = 3;
 	for(int i = 0; i < RUNS; ++i)
 	{
 		std::vector<LN<int>*> test = generate_merge();
-		ASSERT_FALSE(test.empty());
+		ASSERT_TRUE(test.size() == ELMS);
 		ASSERT_TRUE(test[0] != nullptr);
 		LN<int>* merged_list = merge(test[1], test[2]);
 		ASSERT_TRUE(merged_list != nullptr);
@@ -29,7 +30,9 @@ TEST(EPI8_LinkedList, Reverse)
 		std::pair<LN<int>*, LN<int>*> test = generate_reverse();
 		ASSERT_TRUE(test.first != nullptr);
 		ASSERT_TRUE(test.second != nullptr);
+		ASSERT_FALSE(compare(test.first, test.second));
 		LN<int>* reverse_list = reverse(test.first);
+		ASSERT_TRUE(reverse_list != nullptr);
 		ASSERT_TRUE(compare(reverse_list, test.second));
 	}
 }
