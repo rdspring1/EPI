@@ -9,7 +9,32 @@ using namespace std;
 
 static const int RUNS = 1000;
 
-TEST(EPI8_LinkedList, cyclicity)
+TEST(EPI8_LinkedList, Merge)
+{
+	for(int i = 0; i < RUNS; ++i)
+	{
+		std::vector<LN<int>*> test = generate_merge();
+		ASSERT_FALSE(test.empty());
+		ASSERT_TRUE(test[0] != nullptr);
+		LN<int>* merged_list = merge(test[1], test[2]);
+		ASSERT_TRUE(merged_list != nullptr);
+		ASSERT_TRUE(compare(merged_list, test[0]));
+	}
+}
+
+TEST(EPI8_LinkedList, Reverse)
+{
+	for(int i = 0; i < RUNS; ++i)
+	{
+		std::pair<LN<int>*, LN<int>*> test = generate_reverse();
+		ASSERT_TRUE(test.first != nullptr);
+		ASSERT_TRUE(test.second != nullptr);
+		LN<int>* reverse_list = reverse(test.first);
+		ASSERT_TRUE(compare(reverse_list, test.second));
+	}
+}
+
+TEST(EPI8_LinkedList, Cyclicity)
 {
 	for(int i = 0; i < RUNS; ++i)
 	{
@@ -17,13 +42,25 @@ TEST(EPI8_LinkedList, cyclicity)
 		LN<int>* cycle_start_ptr = cyclicity(rnd.first);
 		if(rnd.second == NONE)
 		{
-			ASSERT_EQ(NULL, cycle_start_ptr);
+			ASSERT_EQ(nullptr, cycle_start_ptr);
 		}
 		else
 		{
-			ASSERT_TRUE(cycle_start_ptr != NULL); 
+			ASSERT_TRUE(cycle_start_ptr != nullptr); 
 			ASSERT_EQ(cycle_start_ptr->value, rnd.second);
 		}	
+	}
+}
+
+TEST(EPI_LinkedList, PostingList)
+{
+	for(int i = 0; i < RUNS; ++i)
+	{
+		PLN<int>* original = generate_posting_list();
+		ASSERT_TRUE(original != nullptr);
+		PLN<int>* copy = copy_posting_list(original);
+		ASSERT_TRUE(copy != nullptr);
+		ASSERT_TRUE(compare(original, copy));
 	}
 }
 

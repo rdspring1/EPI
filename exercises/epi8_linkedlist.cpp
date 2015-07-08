@@ -1,5 +1,17 @@
 #include "linkedlist.h"
 
+LN<int>* merge(LN<int>* first, LN<int>* second)
+{
+	// TODO
+	return nullptr;
+}
+
+LN<int>* reverse(LN<int>* original)
+{
+	// TODO
+	return nullptr;
+}
+
 LN<int>* cyclicity(LN<int>* head)
 {
 	// Find Cycle
@@ -15,7 +27,7 @@ LN<int>* cyclicity(LN<int>* head)
 
 	if(!slow && !fast)
 	{
-		return NULL;
+		return nullptr;
 	}	
 
 	// Cycle Length
@@ -41,4 +53,10 @@ LN<int>* cyclicity(LN<int>* head)
 		fast = advance(fast);
 	}
 	return slow;
+}
+
+PLN<int>* copy_posting_list(PLN<int>* original)
+{
+	// TODO
+	return nullptr;
 }

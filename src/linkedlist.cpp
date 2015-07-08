@@ -4,6 +4,18 @@
 #include <stdlib.h>
 #include <utility>
 
+bool compare(LN<int>* first, LN<int>* second)
+{
+	// TODO
+	return false;
+}
+
+bool compare(PLN<int>* first, PLN<int>* second)
+{
+	// TODO
+	return false;
+}
+
 std::pair<LN<int>*, LN<int>*> generate_list()
 {
 	LN<int>* head = new LN<int>(0);
@@ -15,6 +27,18 @@ std::pair<LN<int>*, LN<int>*> generate_list()
 		curr = curr->next;
 	}
 	return std::make_pair(head, curr);
+}
+
+std::vector<LN<int>*> generate_merge()
+{
+	// TODO
+	return std::vector<LN<int>*>();
+}
+
+std::pair<LN<int>*, LN<int>*> generate_reverse()
+{
+	// TODO
+	return std::make_pair(nullptr, nullptr);
 }
 
 std::pair<LN<int>*, int> generate_cycle()
@@ -36,6 +60,12 @@ std::pair<LN<int>*, int> generate_cycle()
 		tail->next = cycle_start;
 	}
 	return std::make_pair(rand_list.first, cycle_pos); 
+}
+
+PLN<int>* generate_posting_list()
+{
+	// TODO
+	return nullptr;
 }
 
 void print(LN<int>* list)
@@ -63,7 +93,7 @@ LN<int>* advance(LN<int>* node)
 {
 	if(!node)
 	{
-		return NULL;
+		return nullptr;
 	}
 	return node->next;
 }
