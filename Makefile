@@ -1,4 +1,5 @@
 all: compile
+	./build/epi
 
 compile: clean
 	mkdir build
@@ -11,3 +12,8 @@ clean:
 	rm -rf build/
 	rm -rf *.*~
 	rm -rf *.out
+
+install:
+	sudo apt-get install libgtest-dev
+	sudo apt-get install cmake
+	cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib
