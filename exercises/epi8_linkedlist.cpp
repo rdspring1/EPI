@@ -100,6 +100,39 @@ LN<int>* cyclicity(LN<int>* head)
 
 PLN<int>* copy_posting_list(PLN<int>* original)
 {
-	// TODO
-	return nullptr;
+	PLN<int>* curr = original;
+
+	// step 1 - duplicate elements of original list
+	// point the original list to their duplicate counterparts
+	while(curr != nullptr)
+	{
+		curr->next = new PLN<int>(*curr);
+	        curr = curr->next->next;	
+	}
+
+	PLN<int>* duplicate = original->next;
+
+	// step 2 - copy jump list
+	curr = original;
+	while(curr != nullptr)
+	{	
+		if(curr->jump != nullptr)
+		{
+			curr->next->jump = curr->jump->next;
+		}
+		curr = curr->next->next;
+	}
+
+	// step 3 - restore next field
+	curr = original;
+	while(curr->next->next != nullptr)
+	{
+		PLN<int>* old_next = curr->next->next;
+		curr->next->next = curr->next->next->next;
+		curr->next = old_next;
+		advance(curr);
+	}
+	curr->next = nullptr;
+
+	return duplicate;
 }

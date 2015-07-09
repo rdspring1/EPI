@@ -30,7 +30,6 @@ TEST(EPI8_LinkedList, Reverse)
 		std::pair<LN<int>*, LN<int>*> test = generate_reverse();
 		ASSERT_TRUE(test.first != nullptr);
 		ASSERT_TRUE(test.second != nullptr);
-		EXPECT_FALSE(compare(test.first, test.second));
 		LN<int>* reverse_list = reverse(test.first);
 		ASSERT_TRUE(reverse_list != nullptr);
 		ASSERT_TRUE(compare(reverse_list, test.second));

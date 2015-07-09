@@ -37,7 +37,7 @@ bool compare(PLN<int>* first, PLN<int>* second)
 		jump(first);
 		jump(second);
 	}
-	return false;
+	return true;
 }
 
 std::pair<LN<int>*, LN<int>*> generate_list()
@@ -164,7 +164,7 @@ PLN<int>* generate_posting_list()
 	std::vector<PLN<int>*> jump_set;
 	jump_set.push_back(head);
 
-	const int size = rand() % SIZE;
+	const int size = rand() % SIZE + 1;
 	for(int i = 0; i < size; ++i)
 	{
 		curr->next = new PLN<int>(i+1);
