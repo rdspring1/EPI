@@ -1,5 +1,5 @@
 all: compile
-	./build/epi
+	./build/EPI
 
 compile: clean
 	mkdir build

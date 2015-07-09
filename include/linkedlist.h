@@ -18,7 +18,7 @@ class LN
 		LN(const T& v)
 		{
 			this->value = v;
-			this->next = NULL;
+			this->next = nullptr;
 		}
 
 	bool operator==(const LN& other) const
@@ -44,8 +44,8 @@ class PLN
 		PLN(const T& v)
 	{
 		this->value = v;
-		this->next = NULL;
-		this->jump = NULL;
+		this->next = nullptr;
+		this->jump = nullptr;
 	}
 
 	bool operator==(const PLN& other) const
