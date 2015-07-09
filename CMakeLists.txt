@@ -9,5 +9,5 @@ include_directories (${CMAKE_SOURCE_DIR})
 file(GLOB SUPPORT_SRC_FILES "src/*.cpp")
 file(GLOB EXERCISE_SRC_FILES "exercises/*.cpp")
 
-add_executable(EPI ${SUPPORT_SRC_FILES} ${EXERCISE_SRC_FILES} epi.cpp)
+add_executable(EPI ${EXERCISE_SRC_FILES} ${SUPPORT_SRC_FILES} epi.cpp)
 target_link_libraries(EPI gtest pthread)

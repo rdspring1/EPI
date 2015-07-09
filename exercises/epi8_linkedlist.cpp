@@ -1,9 +1,45 @@
 #include "linkedlist.h"
+#include <iostream>
 
 LN<int>* merge(LN<int>* first, LN<int>* second)
 {
-	// TODO
-	return nullptr;
+	LN<int>* merged_list = nullptr;
+	if(*first < *second)
+	{
+		merged_list = first;
+		advance(first);
+	}
+	else
+	{
+		merged_list = second;
+		advance(second);
+	}
+
+	LN<int>* curr = merged_list;
+	while((first != nullptr) && (second != nullptr))
+	{
+		if(*first < *second)
+		{
+			curr->next = first;
+			advance(first);
+		}
+		else
+		{
+			curr->next = second;
+			advance(second);
+		}
+		advance(curr);
+	}
+
+	if(!first)
+	{
+		curr->next = second;
+	}
+	else
+	{
+		curr->next = first;
+	}
+	return merged_list;
 }
 
 LN<int>* reverse(LN<int>* original)

@@ -1,6 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#include <iostream>
 #include <vector>
 #include <utility>
 
@@ -20,6 +21,26 @@ class LN
 			this->value = v;
 			this->next = nullptr;
 		}
+
+	bool operator<(const LN& other) const
+	{
+		return this->value < other.value;
+	}
+
+	bool operator<=(const LN& other) const
+	{
+		return !(*this > other);
+	}
+
+	bool operator>(const LN& other) const
+	{
+		return this->value > other.value;
+	}
+
+	bool operator>=(const LN& other) const
+	{
+		return !(*this < other);
+	}
 
 	bool operator==(const LN& other) const
 	{
@@ -46,6 +67,26 @@ class PLN
 		this->value = v;
 		this->next = nullptr;
 		this->jump = nullptr;
+	}
+
+	bool operator<(const PLN& other) const
+	{
+		return this->value < other.value;
+	}
+
+	bool operator<=(const PLN& other) const
+	{
+		return !(*this > other);
+	}
+
+	bool operator>(const PLN& other) const
+	{
+		return this->value > other.value;
+	}
+
+	bool operator>=(const PLN& other) const
+	{
+		return !(*this < other);
 	}
 
 	bool operator==(const PLN& other) const

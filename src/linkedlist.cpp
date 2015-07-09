@@ -72,19 +72,22 @@ std::vector<LN<int>*> generate_merge()
 	{
 		const int offset = rand() % SIZE;
 		result->next = new LN<int>(result->value + offset);
-		advance(result);
+		assert(*result <= *(result->next));
 
 		const int side = (rand() % SIZE) % 2;
 		if(side)
 		{
 			lhs->next = new LN<int>(result->value + offset);
+			assert(*lhs <= *(lhs->next));
 			advance(lhs);
 		}
 		else
 		{
 			rhs->next = new LN<int>(result->value + offset);
+			assert(*rhs <= *(rhs->next));
 			advance(rhs);
 		}
+		advance(result);
 	}
 	return test;
 }
