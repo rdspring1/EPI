@@ -1,5 +1,4 @@
 #include "linkedlist.h"
-#include <iostream>
 
 LN<int>* merge(LN<int>* first, LN<int>* second)
 {
@@ -44,8 +43,16 @@ LN<int>* merge(LN<int>* first, LN<int>* second)
 
 LN<int>* reverse(LN<int>* original)
 {
-	// TODO
-	return nullptr;
+	LN<int>* prev = nullptr;
+	LN<int>* future = original->next;
+	while(future != nullptr)
+	{
+		original->next = prev;
+		prev = original;
+		original = future;
+		future = original->next;
+	}
+	return original;
 }
 
 LN<int>* cyclicity(LN<int>* head)

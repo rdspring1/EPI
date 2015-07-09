@@ -96,27 +96,41 @@ std::pair<LN<int>*, LN<int>*> generate_reverse()
 {
 	std::list<int> rand_list;
 	const int size = rand() % SIZE + 1;
-	for(int i = 0; i < size; ++i)
+	for(int i = 0; i < size+1; ++i)
 	{
 		rand_list.push_back(rand() % SIZE);
 	}
 
-	LN<int>* forward = new LN<int>(0);
-	LN<int>* fcurr = forward;
+	LN<int>* forward = nullptr;
+	LN<int>* fcurr = nullptr;
 	for(auto& v : rand_list)
 	{
-		fcurr->value = v;
-		fcurr->next = new LN<int>(0);
-		advance(fcurr);
+		if(!forward)
+		{
+			forward = new LN<int>(v);
+			fcurr = forward;
+		}
+		else
+		{
+			fcurr->next = new LN<int>(v);
+			advance(fcurr);
+		}
 	}
 
-	LN<int>* backward = new LN<int>(0);
-	LN<int>* bcurr = backward;
+	LN<int>* backward = nullptr;
+	LN<int>* bcurr = nullptr;
 	for(auto iter = rand_list.rbegin(); iter != rand_list.rend(); ++iter)
 	{
-		bcurr->value = *iter;
-		bcurr->next = new LN<int>(0);
-		advance(bcurr);
+		if(!backward)
+		{
+			backward = new LN<int>(*iter);
+			bcurr = backward;
+		}
+		else
+		{
+			bcurr->next = new LN<int>(*iter);
+			advance(bcurr);
+		}
 	}
 	return std::make_pair(forward, backward);
 }
@@ -178,17 +192,6 @@ PLN<int>* generate_posting_list()
 	return head;
 }
 
-template<typename T>
-void print(T* list)
-{
-	while(list != NULL)
-	{
-		std::cout << list->value << " ";
-		advance(list);
-	}
-	std::cout << "NULL" << std::endl;
-}
-
 void print_jump(PLN<int>* list)
 {
 	while(list != NULL)
@@ -216,22 +219,6 @@ void print_cycle(LN<int>* list)
 	else
 	{
 		std::cout << "NULL" << std::endl;
-	}
-}
-
-void advance(LN<int>*& node)
-{
-	if(node != nullptr)
-	{
-		node = node->next;
-	}
-}
-
-void advance(PLN<int>*& node)
-{
-	if(node != nullptr)
-	{
-		node = node->next;
 	}
 }
 

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-static const int RUNS = 1000;
+static const int RUNS = 10000;
 
 TEST(EPI8_LinkedList, Merge)
 {
@@ -30,7 +30,7 @@ TEST(EPI8_LinkedList, Reverse)
 		std::pair<LN<int>*, LN<int>*> test = generate_reverse();
 		ASSERT_TRUE(test.first != nullptr);
 		ASSERT_TRUE(test.second != nullptr);
-		ASSERT_FALSE(compare(test.first, test.second));
+		EXPECT_FALSE(compare(test.first, test.second));
 		LN<int>* reverse_list = reverse(test.first);
 		ASSERT_TRUE(reverse_list != nullptr);
 		ASSERT_TRUE(compare(reverse_list, test.second));
@@ -55,7 +55,7 @@ TEST(EPI8_LinkedList, Cyclicity)
 	}
 }
 
-TEST(EPI_LinkedList, PostingList)
+TEST(EPI8_LinkedList, PostingList)
 {
 	for(int i = 0; i < RUNS; ++i)
 	{

@@ -101,8 +101,14 @@ class PLN
 };
 
 // Iterator Functions
-void advance(LN<int>*& node);
-void advance(PLN<int>*& node);
+template<typename T>
+void advance(T& node)
+{
+	if(node != nullptr)
+	{
+		node = node->next;
+	}
+}
 void jump(PLN<int>*& node);
 
 // Unit Test Functions
@@ -118,7 +124,15 @@ PLN<int>* generate_posting_list();
 
 // Debug Functions
 template<typename T>
-void print(T* list);
+void print(T* list)
+{
+	while(list != NULL)
+	{
+		std::cout << list->value << " ";
+		advance(list);
+	}
+	std::cout << "NULL" << std::endl;
+}
 void print_jump(PLN<int>* list);
 void print_cycle(LN<int>* list);
 
